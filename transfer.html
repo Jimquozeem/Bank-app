@@ -1,0 +1,130 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<style>
+    body{background:url("image/repeated-square.png") repeat center;
+    }
+ .transfer{background:linear-gradient(270deg,#5899e2,#ffffff);
+      width:800px;
+      height:67px;
+      border-radius:10px;
+      padding-top:40px;
+      padding-left:480px;
+      font-size:30px;
+      font-weight:bold;
+      }
+ .wrapper{border:1px solid black;
+     background:linear-gradient(170deg,#5899e2,#ffffff);
+      padding:20px;
+      height:320px;
+background:url("image/moroccan.png") repeat center;
+      border-radius:10px;
+      width:1242px;
+ }
+ #currentBal{
+ padding-left:850px;
+ padding-top:5px;
+ //margin-left:200px;
+ }
+button{border-radius:10px;
+font-size:15px;
+transition-duration:1s;
+}
+button:hover{
+font-size:1.3em;
+transition-property: font-size;
+transition-duration:1s;}
+</style>
+</head>
+<body>
+<div class="transfer">Crystal Bank(internet banking)</div>
+<br>
+<div class="wrapper">
+<h1> Bear with us,You can only transfer to a registered Crystal Account at the moment!</h1>
+<label style="font-size:20px">Enter beneficiary Account details:</label><input id="beneficiaryId" style="width:250px">
+ <button onclick="check()">CHECK</button> <div id="currentBal" style="color:black;font-size:20px;font-weight:bold"></div>    <br><br>
+    <h1 id="confirmedName" style="color:white"></h1>
+    <div id="successfulTransfer"></div>
+    <label style="font-size:20px">Enter Amount:</label><input id="transferredAmt" style="width:370px"> <button onclick="submit()">SUBMIT</button>
+<div id="highestTransfer" style="color:white;margin-left:160px;font-family:fantasy"></div>
+</div>
+    <script>
+var dataBase=JSON.parse(localStorage.getItem("users"));
+var myVariable=undefined;
+transferredAmt.disabled=true;
+var currentLogin=JSON.parse(localStorage.getItem("currentLogin"));
+for(i=0;i<dataBase.length;i++){
+var userId=dataBase[i];
+if(userId.accountNo== currentLogin){currentBal.innerText="Available Bal(NGN):"+userId.accountBal; break;}
+}//for loop ends here
+
+//check function starts here
+const check=()=>{
+var myEntry=beneficiaryId.value;
+//let currentLogin=JSON.parse(localStorage.getItem("currentLogin"));
+//for loop starts here
+for(i=0;i<dataBase.length;i++){
+var userId=dataBase[i];
+var confirmedId=userId.accountNo;
+
+//if statement
+if(confirmedId==myEntry){
+myVariable=1
+break;}//if statement ends
+}
+//for loop ends here
+
+if(myVariable){
+transferredAmt.disabled=false;
+confirmedName.innerText="You are about to send fund to"+" "+userId.lastName+" "+userId.firstName;
+//var currentId=JSON.parse(localStorage.getItem("currentLogin"));
+}else{confirmedName.innerText="Please kindly provide a registered crystal's account Number";
+}//if statement ends here
+
+} //check function ends here
+
+//start function starts
+const submit=()=>{
+var myEntry=beneficiaryId.value;
+
+//for loop starts(NOTE:dataBase variable already created above)
+for(i=0;i<dataBase.length;i++){
+var userId=dataBase[i];
+var userAccountNo=userId.accountNo;
+var unitAmount=transferredAmt.value
+if(userAccountNo==currentLogin && userId.accountBal>0 && myEntry.length==10 && currentLogin!=myEntry && transferredAmt.value<500000 && unitAmount.length>=3){
+userId.accountBal=eval(userId.accountBal-transferredAmt.value);
+localStorage.setItem("users",JSON.stringify(dataBase));
+currentBal.innerText="Available Bal(NGN):"+userId.accountBal;
+confirmedName.innerText= "Transaction Completed";
+if(userId.accountBal<=0){
+confirmedName.innerText="Insufficient fund!";}
+myVariable=2;
+break;}
+//if statement ends here
+}//for loop ends here
+//for loop starts here
+for(i=0;i<dataBase.length;i++){
+var userId=dataBase[i]
+if(userId.accountNo==myEntry && currentLogin!=myEntry && transferredAmt.value<500000 && unitAmount.length>=3){
+userId.accountBal=eval(Number(userId.accountBal)+Number(transferredAmt.value));
+localStorage.setItem("users",JSON.stringify(dataBase));
+ break;}
+ //if statement ends here
+
+} //for loop ends here
+
+ if(currentLogin==myEntry){confirmedName.innerHTML="Invalid transaction!"+"<br>"+"Please kindly provide a valid beneficiary account";}
+ if(transferredAmt.value>=500000){highestTransfer.innerText="Transfer limit exceeded";}
+
+ if(unitAmount.length<3){confirmedName.innerText="please enter an amount in multiples of 100 and 1000";}
+}
+
+//submit function ends here!
+
+
+</script>
+</body>
+</html>

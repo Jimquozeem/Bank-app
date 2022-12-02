@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+<style>
+//style rules starts here
+    body{margin:0;
+     background:url("image/repeated-square.png") repeat center;
+    }
+   .regpage{
+   width:95vw;
+   height:100vh;
+   gap:10px;
+   display:grid;
+   grid-template-columns:1fr 4fr 1fr;
+   grid-template-rows:1fr 4fr 1fr;
+   padding:10px;
+   margin-left:10px;
+
+   //border-radius:10px;
+   }
+   .regpage div{
+   //border:1px solid black;
+    border-radius:10px}
+.header{
+height:70px;
+grid-column:1/4;
+background:linear-gradient(270deg,#5899e2,#ffffff);
+/*background-color:#ff7800;*/
+padding-top:40px;
+padding-left:480px;
+font-size:30px;
+font-weight:bold;
+}
+
+.sidebar1{
+grid-column:1/2;
+background:linear-gradient(270deg,#5899e2,#ffffff);
+}
+.body{
+height:220px;
+grid-column:2/4;
+padding:100px;
+background:linear-gradient(45deg,#5899e2,#ffffff);
+background:url("image/image5.jpeg") no-repeat center;
+background-size:cover;
+}
+.sidebar2{
+grid-column:3/4;
+background-color:#88ff00;
+background:linear-gradient(270deg,#5899e2,#ffffff);
+}
+.footer{
+height:110px;
+grid-column:1/4;
+background-color:orange;
+background:linear-gradient(270deg,#5899e2,#ffffff);
+}
+a:hover{
+color:black;
+}
+.regpage a{
+ text-decoration: none;}
+ button{border-radius:10px;
+font-size:15px;
+transition-duration:1s;}
+button:hover{
+font-size:1em;
+transition-property:font-size;
+transition-duration:1s;}
+//style rule ends
+</style>
+</head>
+<body>
+<!--html structure starts here-->
+<div class="regpage">
+  <div class="header">Crystal Bank(internet banking)</div>
+    <div class="sidebar1">
+        <h1>Our Services</h1>
+        <ul>
+           <li><a href="#">Create account</a></li>
+            <li><a href="#">Customer service</a></li>
+            <li><a href="#">FAQ</a></li>
+        </ul>
+    </div>
+    <div class="body">
+        <input id="name1" placeholder="First Name" required> <input id="name2" class="name2" placeholder="Last Name" required><br><br>
+          <input id="email" placeholder="Email" style="width:350px" required> <br><br>
+          <input id="pass" placeholder="password" style="width:350px" required><br><br>
+          <button onclick="newAccount()" > CREATE A NEW ACCOUNT</button>
+            <h1 id="congratulation"></h1>
+        <button onclick="proceed()" >PROCEED TO LOGIN PAGE</button>
+    </div>
+<!--    <div class="sidebar2">sidebar2</div>-->
+    <div class="footer">
+        <span style="padding-left:480px;">contact:+2347019007849</span> <span>Email:<a href="#">jimqouzeem@gmail.com</a></span>
+    </div>
+</div>
+<!--html structure ends here-->
+
+<script >
+//scripting starts here
+// getting the page ready by creating  an empty array and using conditional statement to insert objects accordingly when data already exist
+var dataBase=[];
+
+if(localStorage.users){
+dataBase=JSON.parse(localStorage.getItem("users"))}
+
+//getting the page ready stops here
+
+// newAccount function stars here
+function newAccount(){
+var name_1;
+var name_2;
+var Email;
+var passWord;
+var userAccountNo;
+var userAccountBal;
+var userInfo={firstName:"rice",lastName:"jim",email:"jimqouzeem@gmail.com",password:"12334",accountNo:"242566617",accountBal:"50000"};
+name_1=name1.value;
+name_2=name2.value;
+Email=email.value;
+passWord=pass.value;
+userAccountBal=500000;
+userAccountNo=Math.floor(Math.random()*10000000000)
+
+// manipulating the objects(userInfo)
+userInfo.firstName=name_1;
+userInfo.lastName=name_2;
+userInfo.email=Email;
+userInfo.password=passWord;
+userInfo.accountNo=userAccountNo;
+userInfo.accountBal=userAccountBal;
+dataBase.push(userInfo);
+
+//userInfo.hasOwnProperty('firstName') read more on this kazeem!
+
+if(name_1.length>=4 && name_2.length>=4 && Email.length>=6 && passWord.length>=4){
+localStorage.setItem("users",JSON.stringify(dataBase));
+congratulation.innerText="hi"+" "+ name_1 + " "+ "Thank you for banking with us" +" "+ "your account Number is:"+ userAccountNo;
+   }else{congratulation.innerText="All input fields are required"}
+}
+
+//redirecting to login page
+const proceed=()=>{
+ location.href=('login.html'); }
+</script>
+</body>
+</html>

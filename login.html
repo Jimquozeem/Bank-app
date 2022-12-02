@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{background:url("image/repeated-square.png") repeat center;
+      }
+      .wrapper{background:linear-gradient(180deg,#5899e2,#ffffff);
+      border:1px solid black;
+      padding:20px;
+      height:200px;
+      background:url("image/moroccan.png") repeat center;
+      border-radius:10px;
+      width:1255px;
+      }
+      .login{background:linear-gradient(270deg,#5899e2,#ffffff);
+      width:800px;
+      height:67px;
+      border-radius:10px;
+      padding-top:40px;
+      padding-left:480px;
+      font-size:30px;
+      font-weight:bold;
+      }
+ button{border-radius:10px;
+font-size:15px;
+transition-duration:1s;
+}
+button:hover{
+font-size:1.3em;
+transition-property: font-size;
+transition-duration:1s;}
+</style>
+</head>
+<body>
+<div class="login">Crystal Bank(internet banking)</div>
+<br>
+<div  class="wrapper">
+    <div id="congratulations" style="font-size:20px;color:white">hello</div>
+   <input placeholder="Email/AccountNo" id="pass1"> <input placeholder="Enter your password" id="pass2"> <button onclick="login_page()">Login</button>
+   <br><br><div id="errorMessage"></div>
+</div>
+<script>
+//scripting starts here
+congratulations.innerHTML="welcome"+"<br>"+ "login  with your Account Number or Gmail"
+var accountNo;
+var password;
+var email;
+var myVariable=undefined;
+//login function starts here
+
+function login_page(){
+accountNo=pass1.value;
+email=pass1.value;
+password=pass2.value;
+
+var dataBase=JSON.parse(localStorage.getItem("users"))
+
+
+for(i=0;i<dataBase.length;i++){
+var userId=dataBase[i];
+var entry1=userId.email;
+var entry2=userId.password;
+var entry3=userId.accountNo;
+
+//conditional statement starts here
+ if((accountNo==entry3||email==entry1) && (password===entry2)){
+ myVariable=1;
+   //alert('active');
+   localStorage.setItem("currentLogin",JSON.stringify(entry3));
+   console.log(entry3);
+   }
+//conditional statement ends here
+}//for loop end here
+
+//conditional statement starts here
+ if(myVariable){
+   location.href=('dashBoard.html');
+   console.log(localStorage.currentLogin);
+   }else{errorMessage.innerText="Incorrect Email/Account Number or password"}//conditional statement ends here
+}//login function ends here
+</script>
+</body>
+ </html>

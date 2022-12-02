@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+       body{background:url("image/repeated-square.png") repeat center;
+      }
+      .dashboard{background:linear-gradient(270deg,#5899e2,#ffffff);
+      width:800px;
+      height:67px;
+      border-radius:10px;
+      padding-top:40px;
+      padding-left:480px;
+      font-size:30px;
+      font-weight:bold;
+      }
+      .wrapper{background:linear-gradient(270deg,#5899e2,#ffffff);
+      border:1px solid black;
+      padding:20px;
+      height:320px;
+      background:url("image/image3.jpeg") repeat center;
+      border-radius:10px;
+      width:1255px;
+      }
+button{border-radius:10px;
+font-size:15px;
+transition-duration:1s;}
+button:hover{
+font-size:2em;
+transition-property:font-size;
+}
+    </style>
+</head>
+<body>
+
+<div class="dashboard">Crystal Bank(internet banking)</div>
+<br>
+    <div class="wrapper">
+     <h1 id="welcome"> </h1>
+    <button>Quick loan</button> <br><br>
+    <button>Airtime purchase</button> <br> <br>
+    <button >Data purchase</button> <br> <br>
+    <button id="transfer" onclick="transferFunc()">Transfers</button> <br><br>
+    <button>Account Settings</button> <br> <br>
+    <button>About</button>
+</div>
+
+<script>
+var dataBase=JSON.parse(localStorage.getItem("users"));
+var currentLogin=JSON.parse(localStorage.getItem("currentLogin"));
+for(i=0;i<dataBase.length;i++){userId=dataBase[i];
+if(userId.accountNo==currentLogin){welcome.innerText="Welcome to your Dashboard"+" " +" "+userId.lastName+" "+userId.firstName+"("+userId.accountNo+")";
+break;}
+}//for loop ends here
+
+const transferFunc =()=>{
+location.href=('transfer.html');}
+</script>
+</body>
+</html>
